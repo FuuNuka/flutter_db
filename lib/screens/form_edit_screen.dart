@@ -22,7 +22,8 @@ class _FormEditScreenState extends State<FormEditScreen> {
   final idController = TextEditingController();
   final titleController = TextEditingController();
   final amountController = TextEditingController();
-
+  final aboutController = TextEditingController();
+  final themeController = TextEditingController();
   final ButtonStyle style =
       ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
@@ -32,6 +33,8 @@ class _FormEditScreenState extends State<FormEditScreen> {
     idController.text = widget.data.id.toString();
     titleController.text = widget.data.title.toString();
     amountController.text = widget.data.amount.toString();
+    aboutController.text = widget.data.about.toString();
+    themeController.text = widget.data.about.toString();
   }
 
   @override
@@ -79,6 +82,28 @@ class _FormEditScreenState extends State<FormEditScreen> {
                         return null;
                       },
                     ),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: "About Cafe"),
+                      autofocus: false,
+                      controller: aboutController,
+                      validator: (String? str) {
+                        if (str!.isEmpty) {
+                          return "Please input Cafe.";
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: "Cafe theme"),
+                      autofocus: false,
+                      controller: themeController,
+                      validator: (String? str) {
+                        if (str!.isEmpty) {
+                          return "Please input Cafe theme.";
+                        }
+                        return null;
+                      },
+                    ),
                     ElevatedButton(
                         style: style,
                         onPressed: () {
@@ -86,7 +111,8 @@ class _FormEditScreenState extends State<FormEditScreen> {
                             var id = int.parse(idController.text);
                             var title = titleController.text;
                             var amount = double.parse(amountController.text);
-
+                            var about = aboutController.text;
+                            var theme = themeController.text;
                             // call provider
                             var provider = Provider.of<TransactionProvider>(
                                 context,
@@ -95,6 +121,8 @@ class _FormEditScreenState extends State<FormEditScreen> {
                                 id: id,
                                 title: title,
                                 amount: amount,
+                                about:about,
+                                theme: theme,
                                 date: widget.data.date);
                             provider.updateTransaction(item);
                             Navigator.pop(context);

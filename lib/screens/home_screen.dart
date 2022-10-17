@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 icon: const Icon(Icons.add))
           ],
-        ),
+        ), 
         body: Consumer(
           builder: (context, TransactionProvider providers, Widget? child) {
             var count = providers.transactions.length;

@@ -31,7 +31,9 @@ class TransactionDB {
       "id": statement.id,
       "title": statement.title,
       "amount": statement.amount,
-      "date": statement.date
+      "date": statement.date,
+      "about": statement.about,
+      "theme": statement.theme
     });
     db.close();
     return keyID;
@@ -51,9 +53,11 @@ class TransactionDB {
       String title = record['title'].toString();
       double amount = double.parse(record['amount'].toString());
       String date = record['date'].toString();
+      String about = record['about'].toString();
+      String theme = record['theme'].toString();
       // print(record['title']);
       transactionList
-          .add(Transactions(id: id, title: title, amount: amount, date: date));
+          .add(Transactions(id: id, title: title, amount: amount, date: date , about:about,theme: theme));
     }
     db.close();
     return transactionList;
@@ -86,7 +90,10 @@ class TransactionDB {
     print("Statement id is ${statement.id}");
 
     //filter with 'id'
-    final finder = Finder(filter: Filter.equals('id', statement.id));
+    final finder = Finder(
+        filter: Filter.and(<Filter>[
+      Filter.equals('date', statement.date)
+    ]));
 
     var deleteResult = await store.delete(db, finder: finder);
     print("$deleteResult row(s) deleted.");
@@ -111,9 +118,11 @@ class TransactionDB {
     String title = snapshot.first['title'].toString();
     double amount = double.parse(snapshot.first['amount'].toString());
     String date = snapshot.first['date'].toString();
+    String about = snapshot.first['about'].toString();
+    String theme = snapshot.first['theme'].toString();
     // print(record['title']);
     transaction =
-        Transactions(id: id, title: title, amount: amount, date: date);
+        Transactions(id: id, title: title, amount: amount, date: date,about: about,theme: theme);
 
     db.close();
     return transaction;

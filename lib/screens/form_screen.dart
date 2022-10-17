@@ -15,7 +15,8 @@ class FormScreen extends StatelessWidget {
   //Controller
   final titleController = TextEditingController();
   final amountController = TextEditingController();
-  
+  final aboutController = TextEditingController();
+  final themeController = TextEditingController();
 
 
     final ButtonStyle style =
@@ -61,6 +62,26 @@ class FormScreen extends StatelessWidget {
                         return null;
                       },
                     ),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: "Cafe"),
+                      controller: aboutController,
+                      validator: (String? str) {
+                        if (str!.isEmpty) {
+                          return "Please input Cafe.";
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: "theme Cafe"),
+                      controller: themeController,
+                      validator: (String? str) {
+                        if (str!.isEmpty) {
+                          return "Please input theme cafe.";
+                        }
+                        return null;
+                      },
+                    ),
                     ElevatedButton(
                         style: style,
                         onPressed: () {
@@ -68,7 +89,8 @@ class FormScreen extends StatelessWidget {
                             
                             var title = titleController.text;
                             var amount = double.parse(amountController.text);
-
+                            var about = aboutController.text;
+                            var theme = themeController.text;
                             // call provider
                             var provider = Provider.of<TransactionProvider>(
                                 context,
@@ -76,7 +98,10 @@ class FormScreen extends StatelessWidget {
                             Transactions item = Transactions(
                                 title: title,
                                 amount: amount,
+                                about: about,
+                                theme: theme,
                                 date:  DateFormat('yyyy-MM-dd - kk:mm:ss').format(DateTime.now()));
+                            
                             provider.addTransaction(item);
                             Navigator.pop(context);
                           }
